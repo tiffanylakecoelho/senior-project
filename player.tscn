@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://5mxdehbf11md"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_ku235"]
+[ext_resource type="Script" path="res://player_camera.gd" id="2_pg8t1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_30wci"]
+albedo_color = Color(0.34, 0.824, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jdyyf"]
+material = SubResource("StandardMaterial3D_30wci")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fdqoo"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_ku235")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_jdyyf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_fdqoo")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(0.999998, 0.00133916, -0.00135754, -0.00134679, 0.999983, -0.00563687, 0.00134997, 0.00563869, 0.999983, 0, 0, 0)
+top_level = true
+
+[node name="CameraTarget" type="Node3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 2.574, 5.36)
+script = ExtResource("2_pg8t1")
+
+[node name="PlayerCamera" type="Camera3D" parent="CameraController/CameraTarget"]
